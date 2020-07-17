@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+  <title>UI5 web component PoC</title>
+
+  <script type="application/javascript">
+    window.onload = () => {
+      let component = document.getElementById('myUi5Component');
+      component.addEventListener('ui5Message', (data) => { console.log(JSON.stringify(data)); });
+      component.addEventListener('loadingError', (error) => { console.error(JSON.stringify(error)); });
+
+      setTimeout(() => {
+        let messageEvent = new CustomEvent('messageToUi5', { text: 'Hello UI5'});
+        component.dispatchEvent(messageEvent);
+      }, 5000);
+    };
+  </script>
+  <script type="module" src="build/ui5-webcomponent.esm.js"></script>
+  <script nomodule src="build/ui5-webcomponent.js"></script>
+</head>
+<body>
+
+  <ui5-component
+    id="myUi5Component"
+    component-name="de.exxcellent.school.ui5"
+    component-url="http://localhost/ui5app"
+  >
+  </ui5-component>
+
+</body>
+</html>
